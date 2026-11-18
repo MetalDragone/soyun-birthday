@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>옥지 생일 여행</title>
+<link rel="preload" href="opening.mp4" as="video" type="video/mp4">
+<link rel="stylesheet" href="fonts.css">
+<style>
+/*
+VOICE: 장난스럽고 다정한 남편의 기획서. 모바일 청첩장처럼 한 장씩 넘기는 초대장.
+IDEA: 가상의 '빵빵 항공'이 발행한 생일 탑승권. 여행지 하나하나가 절취선 있는 보딩패스.
+PICTURE: 오프닝은 아내의 포지타노 레몬 그라니타 영상 + 손글씨 축하 문구, 본문은 여행지마다 그린 작은 바다 풍경.
+COLOUR and TYPE: 레몬 옐로(영상 속 그라니타) 주색, 깊은 바다색 잉크, 산호색 포인트. Do Hyeon 제목, Gowun Dodum 본문, Nanum Pen Script 손글씨.
+LAYOUT: 480px 한 줄 모바일 카드 흐름. 오프닝 → 표지 → 조건 → 필터 → 탑승권 5장 → 비교표 → 탈락 명단 → 결재.
+*/
+:root{color-scheme:light dark;
+--bg:light-dark(#fffdf4,#0f1a24);--paper:light-dark(#ffffff,#16263a);--ink:light-dark(#0d2b45,#eef4fb);--soft:light-dark(#4f6478,#a9bccf);
+--lemon:#f7d548;--lemon2:light-dark(#fff3b8,#3a3413);--sea:light-dark(#0d5e8c,#58b5e8);--coral:#ff6b57;--line:light-dark(#e6e1cf,#2a3d55)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Gowun Dodum",system-ui,sans-serif;overflow-x:clip;word-break:keep-all;overflow-wrap:break-word}
+body.lock{overflow:hidden;height:100svh}
+h1,h2,h3,.dh{font-family:"Do Hyeon",system-ui,sans-serif;font-weight:400;line-height:1.1;margin:0;text-wrap:balance}
+.wrap{max-width:480px;margin:0 auto;padding:0 18px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,textarea:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+
+/* opening */
+#op{position:fixed;inset:0;z-index:50;background:#000;display:grid;place-items:center;overflow:hidden;transition:clip-path .9s cubic-bezier(.7,0,.2,1),opacity .9s}
+#op.out{clip-path:inset(0 0 100% 0);pointer-events:none}
+#op video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.1)}
+#op .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,43,69,.6) 0%,rgba(13,43,69,.15) 30%,rgba(13,43,69,0) 45%,rgba(13,43,69,0) 72%,rgba(13,43,69,.65) 100%)}
+.frame{position:absolute;inset:14px;border:2px solid rgba(255,255,255,.75);border-radius:18px;pointer-events:none}
+.optop{position:absolute;top:34px;left:0;right:0;text-align:center;color:#fff}
+.optop .air{font-family:"Do Hyeon";letter-spacing:.02em;font-size:15px;opacity:.9}
+.optop .hand{font-family:"Nanum Pen Script";font-size:clamp(34px,10vw,52px);line-height:1;margin-top:6px;text-shadow:0 2px 12px rgba(0,0,0,.35)}
+.opbot{position:absolute;left:0;right:0;bottom:calc(36px + env(safe-area-inset-bottom));text-align:center;color:#fff;padding:0 24px}
+.big{margin-top:6px;font-family:"Do Hyeon";font-size:clamp(50px,15vw,76px);line-height:1;color:var(--lemon);text-shadow:0 3px 0 #0d2b45,0 8px 24px rgba(0,0,0,.4)}
+.date{display:inline-block;margin-top:10px;font-family:"Do Hyeon";font-size:18px;background:#fff;color:#0d2b45;border-radius:99px;padding:4px 14px}
+.go{margin-top:20px;min-height:52px;padding:0 28px;border:0;border-radius:99px;background:var(--lemon);color:#0d2b45;font-family:"Do Hyeon";font-size:20px;box-shadow:0 6px 0 #c9a514}
+.go:active{transform:translateY(3px);box-shadow:0 3px 0 #c9a514}
+.rise{opacity:0;transform:translateY(16px);animation:rise .8s forwards}
+.d1{animation-delay:.4s}.d2{animation-delay:1.3s}.d3{animation-delay:2.1s}.d4{animation-delay:2.9s}
+@keyframes rise{to{opacity:1;transform:none}}
+.stamp{position:absolute;right:22px;top:46%;width:92px;height:92px;border-radius:50%;border:3px dashed var(--coral);color:var(--coral);background:rgba(255,255,255,.88);display:grid;place-items:center;text-align:center;font-family:"Do Hyeon";font-size:15px;line-height:1.1;transform:rotate(-14deg) scale(1.6);opacity:0;animation:stamp .45s 3.4s forwards}
+@keyframes stamp{to{opacity:1;transform:rotate(-14deg) scale(1)}}
+
+/* cover */
+.cover{background:var(--lemon);color:#0d2b45;padding:40px 0 30px;position:relative;overflow:hidden}
+.cover:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:22px;background:radial-gradient(circle at 11px 0,transparent 11px,var(--bg) 12px) 0 0/22px 22px repeat-x}
+.cover .air{font-family:"Do Hyeon";font-size:15px}
+.cover h1{font-size:clamp(34px,10vw,46px);margin:8px 0 14px}
+.cover h1 small{display:block;font-size:.5em;margin-bottom:6px}
+.cap{display:flex;gap:14px;align-items:center;background:#fff;border-radius:18px;padding:12px;box-shadow:0 4px 0 rgba(13,43,69,.15)}
+.cap img{width:74px;height:74px;border-radius:50%;object-fit:cover;border:3px solid #0d2b45;flex:none}
+.cap b{font-family:"Do Hyeon";font-weight:400;font-size:19px}
+.cap p{margin:2px 0 0;font-size:14px;line-height:1.45}
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:16px}
+.rules div{background:rgba(255,255,255,.6);border-radius:12px;padding:8px 6px;text-align:center;font-size:13px;line-height:1.3}
+.rules strong{display:block;font-family:"Do Hyeon";font-weight:400;font-size:18px}
+
+section{padding:28px 0}
+.sh{font-size:26px;margin-bottom:6px}
+.sub{color:var(--soft);font-size:14px;margin:0 0 14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:0 16px;border-radius:99px;border:2px solid var(--ink);background:var(--paper);font-size:15px}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+
+/* boarding passes */
+.pass{background:var(--paper);border-radius:20px;margin:16px 0;box-shadow:0 2px 0 var(--line),0 10px 26px rgba(13,43,69,.08);overflow:hidden;transition:transform .3s,opacity .3s,box-shadow .3s;position:relative}
+.pass.dim{opacity:.45}
+.pass.best{box-shadow:0 0 0 3px var(--coral),0 10px 26px rgba(13,43,69,.12)}
+.pass.chosen{box-shadow:0 0 0 4px var(--lemon),0 12px 30px rgba(13,43,69,.18)}
+.scene{height:150px;position:relative;display:block}
+.scene svg{position:absolute;inset:0;width:100%;height:100%}
+.tag{position:absolute;left:14px;top:12px;background:#fff;color:#0d2b45;border-radius:99px;padding:3px 12px;font-family:"Do Hyeon";font-size:14px}
+.bestmark{position:absolute;right:14px;top:12px;background:var(--coral);color:#fff;border-radius:99px;padding:3px 12px;font-family:"Do Hyeon";font-size:14px;display:none}
+.pass.best .bestmark{display:block}
+.ph{padding:14px 16px 4px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.ph h3{font-size:28px}
+.ph .ctry{font-size:13px;color:var(--soft)}
+.price{text-align:right;white-space:nowrap}
+.price b{font-family:"Do Hyeon";font-weight:400;font-size:24px;color:var(--sea)}
+.price span{display:block;font-size:12px;color:var(--soft)}
+.line{font-size:15px;padding:0 16px;margin:4px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border-block:1px dashed var(--line)}
+.grid div{background:var(--paper);padding:8px 10px;font-size:12px;color:var(--soft);line-height:1.35}
+.grid b{display:block;color:var(--ink);font-weight:400;font-family:"Do Hyeon";font-size:16px;white-space:nowrap}
+.swim{display:flex;gap:3px;margin-top:3px}.swim i{width:14px;height:8px;border-radius:4px;background:var(--line)}.swim i.on{background:var(--sea)}
+.body{padding:12px 16px 4px;font-size:14.5px}
+.body ul{margin:0 0 10px;padding-left:18px}.body li{margin:3px 0}
+.quote{background:var(--lemon2);border-radius:14px;padding:10px 12px;margin:8px 0 6px;display:flex;gap:10px;align-items:flex-start;font-size:14.5px}
+.quote img{width:34px;height:34px;border-radius:50%;object-fit:cover;flex:none}
+.cut{position:relative;height:18px;margin-top:8px}
+.cut:before{content:"";position:absolute;left:14px;right:14px;top:9px;border-top:2px dashed var(--line)}
+.cut:after,.cut i{content:"";position:absolute;top:0;width:18px;height:18px;border-radius:50%;background:var(--bg)}
+.cut:after{right:-9px}.cut i{left:-9px}
+.pf{display:flex;gap:10px;align-items:center;padding:6px 16px 16px}
+.dates{flex:1;font-size:13px;color:var(--soft);line-height:1.4}
+.dates b{color:var(--ink);font-weight:400}
+.pick{min-height:48px;padding:0 18px;border-radius:14px;border:0;background:var(--ink);color:var(--bg);font-family:"Do Hyeon";font-size:18px;white-space:nowrap}
+.pass.chosen .pick{background:var(--lemon);color:#0d2b45}
+
+/* compare */
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;background:var(--paper);border-radius:14px;overflow:hidden}
+th,td{padding:10px 6px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{font-family:"Do Hyeon";font-weight:400;font-size:15px;background:var(--lemon2)}
+td.n{text-align:right}
+
+/* rejected */
+.rej{display:grid;gap:8px}
+.rej div{display:flex;justify-content:space-between;gap:12px;background:var(--paper);border-radius:12px;padding:10px 14px;font-size:14.5px;border:1px solid var(--line)}
+.rej s{flex:none;font-family:"Do Hyeon";font-size:17px;text-decoration-color:var(--coral);text-decoration-thickness:3px;white-space:nowrap}
+.rej span{color:var(--soft);text-align:right}
+
+/* final */
+.final{background:#0d2b45;color:#fff;padding:34px 0 44px;margin-top:10px}
+.final .sh{color:var(--lemon)}
+.ticket{background:#fff;color:#0d2b45;border-radius:20px;overflow:hidden;margin-top:14px}
+.ticket video{width:100%;height:240px;object-fit:cover;object-position:50% 72%;display:block;background:#ddd}
+.ticket .in{padding:14px 16px}
+.ticket .dest{font-family:"Do Hyeon";font-size:30px}
+.ticket .meta{font-size:14px;color:#4f6478}
+textarea{width:100%;min-height:76px;margin-top:10px;border-radius:12px;border:2px solid #d9d3bd;padding:10px;font:16px/1.5 "Gowun Dodum",sans-serif;color:#0d2b45;background:#fffdf4;resize:vertical}
+.acts{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:8px;margin-top:10px}
+.acts button{min-height:50px;border-radius:14px;border:0;font-family:"Do Hyeon";font-size:18px}
+.send{background:var(--coral);color:#fff}.copy{background:var(--lemon);color:#0d2b45}
+.acts button:disabled{opacity:.4;cursor:not-allowed}
+#msg{min-height:22px;margin:10px 0 0;font-size:14px;color:var(--lemon)}
+.note{font-size:12.5px;color:var(--soft);margin-top:18px;line-height:1.5}
+.final .note{color:#a9bccf}
+.replay{background:none;border:0;color:#a9bccf;text-decoration:underline;font-size:14px;min-height:44px;padding:0}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body class="lock">
+
+<div id="op" role="dialog" aria-label="생일 여행 초대 오프닝">
+  <video id="opv" src="opening.mp4" poster="poster.jpg" autoplay muted playsinline loop preload="auto"></video>
+  <div class="veil"></div><div class="frame"></div>
+  <div class="optop">
+    <div class="air rise d1">빵빵 항공 · 생일 특별편 BB0307</div>
+    <div class="hand rise d2">옥지야, 생일 축하해!</div>
+    <div class="big rise d3">생일 기념 여행!</div>
+  </div>
+  <div class="stamp">생일<br>탑승<br>확정</div>
+  <div class="opbot">
+    <div class="date rise d3">2027. 3. 7 (일)</div><br>
+    <button class="go rise d4" id="open">탑승권 열어보기</button>
+  </div>
+</div>
+
+<header class="cover">
+  <div class="wrap">
+    <div class="air">빵빵 항공 · BB0307 · 1등석 탑승객 옥지 님</div>
+    <h1><small>빵빵이가 제안하는</small>옥지 생일 여행</h1>
+    <div class="cap">
+      <img src="captain.svg" alt="기장 빵빵이 캐릭터">
+      <div><b>기장 빵빵이 드림</b><p>옥지님, 이번 생일엔 바다로 모시겠습니다. 아래 탑승권 중 하나만 고르시면 나머지(예약·짐·사진 기사)는 기장이 다 합니다.</p></div>
+    </div>
+    <div class="rules">
+      <div><strong>3/7 포함</strong>3박4일~4박5일</div>
+      <div><strong>직항만</strong>경유 없이 바로</div>
+      <div><strong>바다 놀이</strong>스노클링·카약</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section aria-labelledby="f-h">
+    <h2 class="sh" id="f-h">옥지님 취향을 눌러주세요</h2>
+    <p class="sub">누르면 딱 맞는 곳에 ‘기장 추천’ 도장이 찍혀요.</p>
+    <div class="chips" id="chips">
+      <button class="chip" data-k="swim" aria-pressed="true">바다 놀이 많이</button>
+      <button class="chip" data-k="price" aria-pressed="false">가성비 최고</button>
+      <button class="chip" data-k="fly" aria-pressed="false">비행은 짧게</button>
+      <button class="chip" data-k="town" aria-pressed="false">밤 산책·구경도</button>
+    </div>
+  </section>
+
+  <section aria-labelledby="p-h" style="padding-top:0">
+    <h2 class="sh" id="p-h">생일 탑승권 5장</h2>
+    <p class="sub">한국 항공사 직항을 먼저 골랐고, 가격은 1인 왕복 최저가예요. 마음에 드는 탑승권의 ‘여기 갈래!’를 눌러주세요.</p>
+    <div id="passes"></div>
+  </section>
+
+  <section aria-labelledby="c-h">
+    <h2 class="sh" id="c-h">한눈에 비교</h2>
+    <div class="scroll"><table id="cmp"><thead><tr><th>여행지</th><th>바다 놀이</th><th>비행</th><th>2인 왕복</th></tr></thead><tbody></tbody></table></div>
+  </section>
+
+  <section aria-labelledby="r-h">
+    <h2 class="sh" id="r-h">아쉽게 탈락한 후보들</h2>
+    <p class="sub">기장이 미리 걸러냈습니다. 이의 제기는 뽀뽀로 받습니다.</p>
+    <div class="rej">
+      <div><s>싼야 (중국)</s><span>3월 초 인천 직항이 없음. 중국 다음 기회에!</span></div>
+      <div><s>보홀·보라카이·세부</s><span>필리핀은 이미 정복 완료</span></div>
+      <div><s>발리·방콕·나트랑</s><span>다녀온 곳</span></div>
+      <div><s>푸켓</s><span>이번엔 패스</span></div>
+      <div><s>괌·사이판·코타키나발루</s><span>이번엔 패스</span></div>
+      <div><s>몰디브</s><span>직항 없음, 4박에 비행만 30시간</span></div>
+    </div>
+  </section>
+</main>
+
+<section class="final" aria-labelledby="z-h">
+  <div class="wrap">
+    <h2 class="sh" id="z-h">최종 결재 부탁드립니다</h2>
+    <p class="sub" style="color:#a9bccf">옥지님 결재가 떨어지면 기장은 바로 항공권 예약 들어갑니다.</p>
+    <div class="ticket">
+      <video id="fv" src="finale.mp4" poster="finale.jpg" muted playsinline loop autoplay preload="none" aria-hidden="true"></video>
+      <div class="in">
+        <div class="meta">탑승객 옥지 · 기장 빵빵이 · BB0307</div>
+        <div class="dest" id="tDest">아직 고르지 않았어요</div>
+        <div class="meta" id="tMeta">위 탑승권에서 ‘여기 갈래!’를 눌러주세요.</div>
+        <textarea id="note" placeholder="빵빵이에게 한마디 (예: 풀빌라 아니면 안 감)"></textarea>
+        <div class="acts">
+          <button class="send" id="send" disabled hidden>결재하기</button>
+          <button class="copy" id="copy" disabled>카톡으로 보낼 글 복사</button>
+        </div>
+        <p id="msg" role="status" style="color:#0d5e8c"></p>
+      </div>
+    </div>
+    <p class="note">항공권 가격: 2026년 11월 18일 구글 항공편 조회 기준, 일반석 1인 왕복 직항. 한국 항공사를 우선으로 골랐고, 가오슝은 한국 항공사 직항이 없어 중화항공이에요. 저비용 항공사는 위탁수하물이 별도이고, 가격은 매일 바뀌어요. 수온은 3월 평년 기준 대략값이라 당일 날씨에 따라 다를 수 있어요.</p>
+    <button class="replay" id="replay">오프닝 다시 보기</button>
+  </div>
+</section>
+
+<script>
+{
+const won=n=>'₩'+n.toLocaleString('ko-KR');
+const D=[
+ {id:'pqc',name:'푸꾸옥',ctry:'베트남 · 남쪽 섬',price:457143,plan:'3/4(목)~3/8(월) 4박5일',alt:'3/5(금)~3/8(월) 3박4일은 ₩472,143',air:'제주항공 오후 6:00 출발',fly:'6시간 15분',flyM:375,act:5,town:2,water:'27~28℃',
+  line:'5곳 중 3월 바다가 가장 따뜻해서 물놀이를 제일 오래 할 수 있어요. 해 지면 남쪽 해변에서 노을까지.',
+  hi:['혼텀섬 해상 케이블카 + 섬 호핑 스노클링','선셋타운 노을 보며 생일 디너','리조트 풀빌라에서 아무것도 안 하기'],
+  bb:'수영복 두 벌 챙겨, 옥지. 여기선 진짜로 바다에 들어간다.',scene:'sun'},
+ {id:'dad',name:'다낭·호이안',ctry:'베트남 · 중부 해안',price:291161,plan:'3/4(목)~3/8(월) 4박5일',alt:'3/5(금)~3/8(월) 3박4일도 같은 가격',air:'에어서울 오후 8:55 출발',fly:'4시간 45분',flyM:285,act:4,town:5,water:'24℃ 안팎',
+  line:'가장 저렴하고, 생일 밤엔 호이안 등불 거리. 바다는 살짝 시원해서 물놀이는 투어와 리조트 풀로.',
+  hi:['참섬 스노클링 투어 (호이안 출발)','호이안 바구니배 타기, 3/7 밤 등불 소원배','미케비치 서핑 강습 + 매일 마사지'],
+  bb:'아낀 항공권 값은 전부 옥지 마사지 쿠폰으로 전환됩니다.',scene:'lantern'},
+ {id:'shi',name:'미야코지마',ctry:'일본 · 오키나와 남쪽 섬',price:457700,plan:'3/4(목)~3/8(월) 4박5일',alt:'3/5(금)~3/8(월) 3박4일은 ₩482,700',air:'진에어 오전 8:15 출발 (시모지섬 공항)',fly:'2시간 35분',flyM:155,act:4,town:1,water:'22℃ 안팎',
+  line:'바다 색은 5곳 중 1등인 ‘미야코 블루’. 3월 평균기온이 20℃라 물에 들어갈 땐 웻슈트를 입어요.',
+  hi:['바다거북 스노클링 (웻슈트 대여)','투명 카약·SUP 패들보드','이라부 대교 해안 드라이브'],
+  bb:'물이 차가우면 내가 수건 들고 해변에서 대기하겠습니다.',scene:'bridge'},
+ {id:'oka',name:'오키나와',ctry:'일본 · 본섬',price:418666,plan:'3/4(목)~3/8(월) 4박5일',alt:'3/5(금)~3/8(월) 3박4일은 ₩433,666',air:'제주항공 오후 1:20 출발',fly:'2시간 30분',flyM:150,act:3,town:3,water:'21~22℃',
+  line:'비행이 가장 짧고 렌터카로 편한 여행. 바다는 차가워서 체험 위주로, 수영은 리조트 온수풀에서.',
+  hi:['푸른 동굴 스노클링 (웻슈트 포함 투어)','츄라우미 수족관 고래상어','고우리 대교 드라이브 + 리조트 온수풀'],
+  bb:'운전은 내가, 조수석 DJ와 간식 담당은 옥지가.',scene:'whale'},
+ {id:'khh',name:'가오슝·컨딩',ctry:'대만 · 최남단',price:444549,plan:'3/5(금)~3/8(월) 3박4일',alt:'한국 항공사 직항이 없어 대만 국적기로 골랐어요',air:'중화항공 오후 12:00 출발',fly:'3시간 15분',flyM:195,act:3,town:4,water:'24℃ 안팎',
+  line:'가오슝 야시장과 예술특구를 구경하고, 대만 최남단 컨딩 바다에서 놀아요. 관광과 바다를 반반.',
+  hi:['컨딩 난완 해변 제트스키·바나나보트','허우비후 스노클링','가오슝 루이펑 야시장 + 보얼예술특구'],
+  bb:'야시장 메뉴는 옥지가 고르고, 계산은 내가 한다.',scene:'light'}
+];
+const S={
+ sun:`<rect width="400" height="150" fill="#ffd36b"/><circle cx="300" cy="78" r="34" fill="#ff8a5c"/><rect y="92" width="400" height="58" fill="#1a9bc4"/><path d="M0 104q25-8 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0" stroke="#bfe9f7" stroke-width="3" fill="none"/><path d="M40 92q20-40 70-48q-30 20-34 48z" fill="#2f7d4f"/><rect x="62" y="60" width="6" height="40" rx="3" fill="#7a5233"/>`,
+ lantern:`<rect width="400" height="150" fill="#24345f"/><rect y="104" width="400" height="46" fill="#162447"/>${[50,110,170,230,290,350].map((x,i)=>`<line x1="${x}" y1="0" x2="${x}" y2="${30+i%2*14}" stroke="#f7d548" stroke-width="1.5"/><ellipse cx="${x}" cy="${46+i%2*14}" rx="16" ry="20" fill="${['#ff6b57','#f7d548','#ff9d5c'][i%3]}"/><ellipse cx="${x}" cy="${120+i%3*6}" rx="6" ry="3" fill="#f7d548" opacity=".7"/>`).join('')}`,
+ light:`<rect width="400" height="150" fill="#9ed8f0"/><rect y="98" width="400" height="52" fill="#1d8fb8"/><path d="M0 98q100-14 200 0t200 0v6H0z" fill="#f4e3b5"/><rect x="290" y="34" width="22" height="66" fill="#fff"/><rect x="290" y="52" width="22" height="10" fill="#ff6b57"/><path d="M284 34h34l-8-12h-18z" fill="#0d2b45"/><circle cx="80" cy="40" r="18" fill="#fff6c7"/>`,
+ bridge:`<rect width="400" height="150" fill="#bfeaf5"/><rect y="74" width="400" height="76" fill="#22c1d6"/><rect y="104" width="400" height="46" fill="#0f8fb3"/><path d="M-10 80q210-60 420 0" stroke="#fff" stroke-width="7" fill="none"/>${[40,90,140,190,240,290,340].map(x=>`<rect x="${x}" y="${66-Math.sin(x/400*Math.PI)*28}" width="4" height="${30+Math.sin(x/400*Math.PI)*28}" fill="#fff"/>`).join('')}`,
+ whale:`<rect width="400" height="150" fill="#0d5e8c"/><rect y="0" width="400" height="40" fill="#1781b5"/><g transform="translate(110 60)"><path d="M0 30q60-40 150-10q30 10 40 0l-6 20 6 20q-10-10-40 0q-90 30-150-30z" fill="#3b6f8f"/>${[20,45,70,95,120].map((x,i)=>`<circle cx="${x}" cy="${30+(i%2)*8}" r="3" fill="#cfe8f5"/>`).join('')}<circle cx="18" cy="26" r="2.5" fill="#0d2b45"/></g><circle cx="60" cy="40" r="4" fill="#9ed8f0"/><circle cx="72" cy="28" r="3" fill="#9ed8f0"/>`
+};
+const $=s=>document.querySelector(s);
+let filt=new Set(['swim']),chosen=null,db=null;
+const score=d=>{let s=0;if(filt.has('swim'))s+=d.act*3;if(filt.has('price'))s+=(480000-d.price)/30000;if(filt.has('fly'))s+=(360-d.flyM)/40;if(filt.has('town'))s+=d.town*2;return s};
+const swimBar=n=>`<span class="swim">${[1,2,3,4,5].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</span>`;
+function render(){
+ const best=filt.size?[...D].sort((a,b)=>score(b)-score(a))[0].id:null;
+ $('#passes').innerHTML=D.map(d=>`<article class="pass${d.id===best?' best':''}${chosen&&chosen!==d.id?' dim':''}${chosen===d.id?' chosen':''}" id="p-${d.id}">
+  <div class="scene"><svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${S[d.scene]}</svg><span class="tag">${d.ctry}</span><span class="bestmark">기장 추천</span></div>
+  <div class="ph"><div><h3>${d.name}</h3></div><div class="price"><b>${won(d.price)}</b><span>1인 왕복 · 직항</span></div></div>
+  <p class="line">${d.line}</p>
+  <div class="grid"><div>바다 놀이${swimBar(d.act)}</div><div>비행<b>${d.fly}</b></div><div>3월 수온<b>${d.water}</b></div></div>
+  <div class="body"><ul>${d.hi.map(h=>`<li>${h}</li>`).join('')}</ul>
+  <div class="quote"><img src="captain.svg" alt=""><div><b class="dh" style="font-weight:400">빵빵이 한마디</b><br>${d.bb}</div></div></div>
+  <div class="cut"><i></i></div>
+  <div class="pf"><div class="dates">추천 <b>${d.plan}</b><br>${d.air}<br>${d.alt}</div>
+  <button class="pick" data-id="${d.id}" aria-pressed="${chosen===d.id}">${chosen===d.id?'선택 완료':'여기 갈래!'}</button></div>
+ </article>`).join('');
+ $('#cmp tbody').innerHTML=[...D].sort((a,b)=>b.act-a.act||a.price-b.price).map(d=>`<tr><td>${d.name}</td><td>${'●'.repeat(d.act)}<span style="opacity:.25">${'●'.repeat(5-d.act)}</span></td><td>${d.fly.replace(' ','')}</td><td class="n">약 ${Math.round(d.price*2/10000)}만 원</td></tr>`).join('');
+ const c=D.find(d=>d.id===chosen);
+ $('#tDest').textContent=c?`${c.name}로 출발!`:'아직 고르지 않았어요';
+ $('#tMeta').textContent=c?`${c.plan} · ${c.air} · 2인 약 ${Math.round(c.price*2/10000)}만 원`:'위 탑승권에서 ‘여기 갈래!’를 눌러주세요.';
+ $('#send').disabled=$('#copy').disabled=!c;
+}
+$('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const k=b.dataset.k;filt.has(k)?filt.delete(k):filt.add(k);b.setAttribute('aria-pressed',filt.has(k));render()});
+$('#passes').addEventListener('click',e=>{const b=e.target.closest('.pick');if(!b)return;chosen=chosen===b.dataset.id?null:b.dataset.id;$('#msg').textContent='';render();if(chosen)setTimeout(()=>$('#z-h').scrollIntoView({behavior:'smooth'}),250)});
+const text=()=>{const c=D.find(d=>d.id===chosen);const n=$('#note').value.trim();return `[빵빵 항공 BB0307 결재]\n옥지 생일 여행지는 ${c.name}!\n일정: ${c.plan}\n항공: ${c.air}, 1인 왕복 ${won(c.price)}~\n${n?'옥지 한마디: '+n+'\n':''}빵빵아 예약 부탁해`};
+$('#copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(text());$('#msg').textContent='복사했어요. 빵빵이 카톡에 붙여넣기 해주세요!'}catch(_){$('#note').value=text();$('#note').select();$('#msg').textContent='아래 칸 글을 길게 눌러 복사해 주세요.'}});
+$('#send').addEventListener('click',async()=>{const c=D.find(d=>d.id===chosen);if(!c)return;
+ if(!db){$('#msg').textContent='여기선 바로 전송이 안 돼요. ‘카톡용 복사’로 보내주세요!';return}
+ $('#send').disabled=true;
+ try{await db.doc('picks/okji').set({dest:c.id,name:c.name,dates:c.plan,price:c.price,note:$('#note').value.trim().slice(0,300),at:new Date().toISOString()});$('#msg').textContent='결재 완료! 빵빵이에게 전달됐어요. 생일 축하해, 옥지 ♥'}
+ catch(_){$('#msg').textContent='전송이 안 됐어요. ‘카톡용 복사’로 보내주세요!'}
+ $('#send').disabled=false});
+const op=$('#op'),v=$('#opv');
+const close=()=>{op.classList.add('out');document.body.classList.remove('lock');setTimeout(()=>{v.pause();op.style.visibility='hidden'},950)};
+$('#open').addEventListener('click',close);
+$('#replay').addEventListener('click',()=>{op.style.visibility='';op.classList.remove('out');document.body.classList.add('lock');v.currentTime=0;v.play().catch(()=>{});op.querySelectorAll('.rise,.stamp').forEach(el=>{el.style.animation='none';void el.offsetWidth;el.style.animation=''})});
+v.play().catch(()=>{});
+render();
+if(window.claude&&claude.use){claude.use('db').then(d=>{db=d;if(!d)return;$('#send').hidden=false;$('#copy').textContent='카톡용 복사';d.doc('picks/okji').get().then(s=>{const x=s&&(s.data?s.data():s);if(x&&x.dest&&!chosen){chosen=x.dest;if(x.note)$('#note').value=x.note;render();$('#msg').textContent='지난번에 고른 여행지가 저장돼 있어요.'}}).catch(()=>{})}).catch(()=>{})}
+}
+</script>
+</body>
+</html>
